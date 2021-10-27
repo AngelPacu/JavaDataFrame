@@ -1,7 +1,5 @@
 package factories;
 
-import factories.DataFrameFactory;
-
 import java.io.File;
 
 public abstract class AbstractFactory {
@@ -10,9 +8,9 @@ public abstract class AbstractFactory {
         String fileName = input.getName();
         String extension = fileName.substring(fileName.lastIndexOf(".")+1);
         return switch (extension) {
-            case ("txt") -> new TxtDFrameFactory();
-            case ("csv") -> new CsvDFrameFactory();
-            case ("json") -> new JsonDFrameFactory();
+            case ("txt") -> new TxtDFFactory();
+            case ("csv") -> new CsvDFFactory();
+            case ("json") -> new JsonDFFactory();
             default -> null;
         };
     }
