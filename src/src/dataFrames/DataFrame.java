@@ -1,6 +1,7 @@
 package dataFrames;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 
 public interface DataFrame extends Iterable<Integer> {
