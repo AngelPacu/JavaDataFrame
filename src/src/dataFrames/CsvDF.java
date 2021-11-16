@@ -1,9 +1,15 @@
 package dataFrames;
 
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 
 public class CsvDF implements DataFrame{
+
+    Map<String, List<Object>> data;
+    ArrayList<String> categories;
+    public CsvDF(Map<String, List<Object>> mapList, ArrayList<String> cat) {
+        data=mapList;
+        categories=cat;
+    }
 
     @Override
     public int at(int row, String column) {
@@ -33,5 +39,12 @@ public class CsvDF implements DataFrame{
     @Override
     public Iterator<Integer> iterator() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "CsvDF{" +
+                "data=" + data +
+                '}';
     }
 }

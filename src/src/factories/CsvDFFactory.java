@@ -6,29 +6,33 @@ import dataFrames.DataFrame;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class CsvDFFactory implements DataFrameFactory {
     @Override
     public DataFrame frame(File input) throws FileNotFoundException {
 
-        Scanner line = new Scanner(input);
-        line.useDelimiter(",|\\r|\\n");   //Don't work with writespace
-        //Map<String, List<Object>> mapList = new HashMap<String,List<Object>>(); //Key -> Diferentes columnas, Value -> ArrayList con todos los valores de la columna.
-        while (line.hasNext())  //returns a boolean value
-        {
-            String imprimir = line.next();
-            //String array[] = imprimir.split("\"");        //Problemon, cuando separa las comillas doble, no imprime valor y el siguiente print peta.
-            //System.out.println(array[1]);
-            System.out.println(imprimir);
-            //Create DF
-            //mapList.put(sc.next(),null);
+        Scanner sc = new Scanner(input);
+        sc.useDelimiter("\\n");
+
+        Map<String, List<Object>> mapList = new HashMap<>();
+        ArrayList<String> categories = new ArrayList<>();
+
+        if(sc.hasNext()){
+            for (String cat:sc.next().replaceAll("[ \"]","").split(",")) {
+                categories.add(cat);
+                mapList.put(cat,new ArrayList<>());
+            }
         }
-        line.close();
-        return new CsvDF();
+        while (sc.hasNext())
+        {
+            Object[] row= sc.next().replaceAll("[ \"]","").split(",");
+            for (int i = 0; i < row.length; i++) {
+                mapList.get(categories.get(i)).add(row[i]);
+            }
+        }
+        sc.close();
+        return new CsvDF(mapList, categories);
     }
 }

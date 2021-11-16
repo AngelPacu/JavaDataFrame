@@ -16,18 +16,10 @@ public class Main {
         DataFrameFactory factory = AbstractFactory.create(input);
         try {
             DataFrame dataFile = factory.frame(input);
-            System.out.println(dataFile.at(1,"Hola"));
+            System.out.println(dataFile);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
     }
 }
