@@ -12,12 +12,12 @@ public class CsvDF implements DataFrame{
     }
 
     @Override
-    public int at(int row, String column) {
+    public Object at(int row, String column) {
         return 0;
     }
 
     @Override
-    public int iat(int row, int column) {
+    public Object iat(int row, int column) {
         return 0;
     }
 
@@ -28,7 +28,8 @@ public class CsvDF implements DataFrame{
 
     @Override
     public int size() {
-        return 0;
+
+        return size();
     }
 
     @Override

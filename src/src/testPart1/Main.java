@@ -18,7 +18,7 @@ public class Main {
         DataFrameFactory factory = AbstractFactory.create(input);
         try {
             DataFrame dataFile = factory.frame(input);
-            System.out.println(dataFile);
+            System.out.println(dataFile.size());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

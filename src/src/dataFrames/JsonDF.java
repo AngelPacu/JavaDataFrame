@@ -1,32 +1,47 @@
 package dataFrames;
 
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 
 public class JsonDF implements DataFrame{
 
-    @Override
-    public int at(int row, String column) {
-        return 0;
+    Map<String, List<Object>> data;
+    ArrayList<String> categories;
+
+    public JsonDF(Map<String, List<Object>> mapList, ArrayList<String> cat) {
+        data=mapList;
+        categories=cat;
     }
 
     @Override
-    public int iat(int row, int column) {
-        return 0;
+    public Object at(int row, String column) {
+        return data.get(column).get(row);
+    }
+
+    @Override
+    public Object iat(int row, int column) {
+        return at(row,categories.get(column));
     }
 
     @Override
     public int columns() {
-        return 0;
+        return data.size();
     }
 
     @Override
     public int size() {
-        return 0;
+        /* Esto es lo mismo que ese return.
+        Collection<List<Object>> listaPrueba = data.values();
+        return listaPrueba.size();
+         */
+        return data.values().size();
+
+        //return data.get("LatD").size();
     }
 
     @Override
     public int[] sort(String column, Comparator<Integer> integerComparator) {
+        List<Object> lista = data.get(column);
+        //lista.sort();       //Como comparamos las letras?
         return new int[0];
     }
 

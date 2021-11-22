@@ -1,17 +1,23 @@
 package dataFrames;
 
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 
 public class TxtDF implements DataFrame{
 
+    Map<String, List<Object>> data;
+    ArrayList<String> categories;
+    public TxtDF(Map<String, List<Object>> mapList, ArrayList<String> cat) {
+        data=mapList;
+        categories=cat;
+    }
+
     @Override
-    public int at(int row, String column) {
+    public Object at(int row, String column) {
         return 0;
     }
 
     @Override
-    public int iat(int row, int column) {
+    public Object iat(int row, int column) {
         return 0;
     }
 
