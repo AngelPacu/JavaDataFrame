@@ -1,16 +1,16 @@
 package dataFrames;
 
 import java.util.Comparator;
+import java.util.List;
 
 public interface DataFrame extends Iterable<Integer> {
 
-    //Matriz? filas i columnas -> Map de Listas, cada lista es una columna
 
     Object at(int row, String column);
     Object iat(int row, int column);
     int columns();
     int size();
-    int[] sort(String column, Comparator<Integer> integerComparator);
+    List<Object> sort(String column, Comparator<Object> integerComparator);
     //DataFrame query(Condicion???) -> Predicate;
 
 }
