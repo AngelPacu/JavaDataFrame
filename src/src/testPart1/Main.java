@@ -1,6 +1,6 @@
 package testPart1;
 
-import dataFrames.DataFrame;
+import dataFrames.*;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
 

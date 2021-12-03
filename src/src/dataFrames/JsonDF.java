@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Estructura de datos leídos a partir de "JSON".
+ */
+
 public class JsonDF extends AbstractDF{
     /**
-     * JsonDF: Objeto que contiene los datos leidos del fichero .JSON
+     * Constructor del JsonDataFrame.
      * @param mapList: Hashmap que contiene <Columna,ListaDeValores>
      * @param cat: Lista que contiene los nombres ordenados de las categorias.
      */
