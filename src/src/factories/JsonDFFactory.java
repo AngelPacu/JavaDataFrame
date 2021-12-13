@@ -1,6 +1,6 @@
 package factories;
 
-import dataFrames.DataFrame;
+import dataFrames.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonDFFactory implements DataFrameFactory {
+
     @Override
     public DataFrame frame(File input) throws IOException, ParseException {
 

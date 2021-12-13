@@ -18,4 +18,5 @@ public class JsonDF extends AbstractDF{
         data = mapList;
         categories = cat;
     }
+
 }
