@@ -1,11 +1,8 @@
 package dataFrames;
 
-import javax.xml.crypto.Data;
 import java.util.*;
-import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Clase abstracta que servirá para heredar las funciones para las clases hijas.
@@ -22,7 +19,7 @@ public abstract class AbstractDF implements DataFrame {
      */
     @Override
     public Object at(int row, String column) {
-        return data.get(column).get(row);
+        return row<size() && categories.contains(column)? data.get(column).get(row): "Index not valid, element not found";
     }
 
     /**
@@ -59,15 +56,28 @@ public abstract class AbstractDF implements DataFrame {
      * Ordena la lista que tenemos asociado con una key (indicada por parámetro).
      * @param column: La key para obtener la lista a ordenar.
      * @param comparator: Lamda que indicará como ordenar la lista.
-     * @return
+     * @return: Lista de los valores ordenados
      */
     @Override
     public List<Object> sort(String column, Comparator<Object> comparator) {
         return data.get(column).stream().sorted().collect(Collectors.toList());
     }
 
-    public Map<String, List<Object>> query(String column, Predicate<Object> predicado) {
-        List<Object> valoresFiltrados = data.get(column).stream().filter(predicado).collect(Collectors.<Object>toList());
+    @Override
+    public Map<String, List<Object>> extendedSort(String column, Comparator<Object> integerComparator) {
+        return null;
+    }
+
+    @Override
+    public List<Object> query(String column, Predicate<Object> pred) {
+        return data.get(column).stream().filter(pred).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> pred) {
+        /*List<Object> index = data.get(column).stream().filter(predicado).mapToInt(x->indice????);
+        data.forEach((k,v)->v.removeAll(index.collect(Collectors.toList())));*/
+        List<Object> valoresFiltrados = data.get(column).stream().filter(pred).collect(Collectors.<Object>toList());
         List<Object> copiaDF = new ArrayList<>(data.get(column));
         List<Integer> listaPos = new ArrayList<>();
         Map<String,List<Object>> dataframeFiltrado = new HashMap<>();
@@ -86,8 +96,29 @@ public abstract class AbstractDF implements DataFrame {
     }
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Object> iterator() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        for (String cat:categories) {
+            result = result.concat(cat+":\t\t\t"+data.get(cat).toString()+"\n");
+        }
+
+        /*for(String cat:categories){
+            result = result.concat(cat+":\t\t\t");
+        }
+        result = result.concat("\n");
+
+        for (int i = 0; i < size(); i++) {
+            for (String category : categories) {
+                result = result.concat(data.get(category).get(i) + "\t\t\t");
+            }
+            result = result.concat("\n");
+        }*/
+
+        return result;
+    }
 }

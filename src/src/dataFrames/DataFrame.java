@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public interface DataFrame extends Iterable<Integer> {
+public interface DataFrame extends Iterable<Object> {
 
 
     Object at(int row, String column);
@@ -13,6 +13,8 @@ public interface DataFrame extends Iterable<Integer> {
     int columns();
     int size();
     List<Object> sort(String column, Comparator<Object> integerComparator);
-    Map<String, List<Object>> query(String column, Predicate<Object> predicado);
+    Map<String, List<Object>> extendedSort(String column, Comparator<Object> integerComparator);
+    List<Object> query(String column, Predicate<Object> predicate);
+    Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicate);
 
 }

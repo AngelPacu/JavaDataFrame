@@ -2,6 +2,7 @@ package dataFrames;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Directory implements DataFrame {
     String name;
@@ -16,47 +17,58 @@ public class Directory implements DataFrame {
         children.add(child);
     }
 
-    public void removeDataFrame(DataFrame child){
+    public void removeDataFrame(DataFrame child) {
         children.remove(child);
     }
 
     @Override
     public Object at(int row, String column) {
-        Object pruebas = null;
-        //children.forEach(x-> x.at(row,column));
-
-        for (DataFrame df:children)
-            pruebas = df.at(row,column);
-        return pruebas;
+        int actual = 0;
+        return children.get(actual).size() > row ?
+                children.get(actual++).at(row - children.get(actual).size(), column) :
+                children.get(actual).at(row, column);
     }
 
     @Override
     public Object iat(int row, int column) {
-        return null;
+        int actual = 0;
+        return children.get(actual).size() > row ?
+                children.get(actual++).iat(row - children.get(actual).size(), column) :
+                children.get(actual).iat(row, column);
     }
 
     @Override
     public int columns() {
-        return 0;
+        return children.stream().mapToInt(DataFrame::columns).sum();
     }
 
     @Override
     public int size() {
-        return 0;
+        return children.stream().mapToInt(DataFrame::size).sum();
     }
 
     @Override
     public List<Object> sort(String column, Comparator<Object> integerComparator) {
+        return children.stream().map(df->df.sort(column,integerComparator)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, List<Object>> extendedSort(String column, Comparator<Object> integerComparator) {
         return null;
     }
 
     @Override
-    public Map<String, List<Object>> query(String column, Predicate<Object> predicado) {
+    public List<Object> query(String column, Predicate<Object> predicate) {
         return null;
     }
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicado) {
+        return null;
+    }
+
+    @Override
+    public Iterator<Object> iterator() {
         return null;
     }
 }
