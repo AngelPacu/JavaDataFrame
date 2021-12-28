@@ -10,7 +10,7 @@ public class Directory implements DataFrame {
 
     public Directory(String name) {
         this.name = name;
-        children = new LinkedList<DataFrame>();
+        children = new LinkedList<>();
     }
 
     public void addDataFrame(DataFrame child) {
@@ -53,13 +53,8 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public Map<String, List<Object>> extendedSort(String column, Comparator<Object> integerComparator) {
-        return null;
-    }
-
-    @Override
     public List<Object> query(String column, Predicate<Object> predicate) {
-        return null;
+        return children.stream().map(df->df.query(column,predicate)).collect(Collectors.toList());
     }
 
     @Override
@@ -68,7 +63,15 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public Iterator<Object> iterator() {
-        return null;
+    public List<String> getCategories() {
+        ArrayList<String> total =new ArrayList<>();
+        children.stream().map(DataFrame::getCategories).reduce((result,x)->x).ifPresent(total::addAll);
+        return total;
+    }
+
+    @Override
+    public Iterator<List<Object>> iterator() {
+        return children.stream().map(DataFrame::iterator).collect(Collectors.);
+        };
     }
 }

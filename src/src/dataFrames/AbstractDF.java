@@ -64,20 +64,23 @@ public abstract class AbstractDF implements DataFrame {
     }
 
     @Override
-    public Map<String, List<Object>> extendedSort(String column, Comparator<Object> integerComparator) {
-        return null;
-    }
-
-    @Override
     public List<Object> query(String column, Predicate<Object> pred) {
         return data.get(column).stream().filter(pred).collect(Collectors.toList());
     }
 
     @Override
     public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> pred) {
-        /*List<Object> index = data.get(column).stream().filter(predicado).mapToInt(x->indice????);
-        data.forEach((k,v)->v.removeAll(index.collect(Collectors.toList())));*/
-        List<Object> valoresFiltrados = data.get(column).stream().filter(pred).collect(Collectors.<Object>toList());
+        Map<String, List<Object>> result = new HashMap<>();
+        categories.forEach(c->result.put(c, new ArrayList<>()));
+        for (int i = 0; i < size(); i++) {
+            if((pred.test(data.get(column).get(i)))) {
+                int finalI = i;
+                data.forEach((k, v)->result.get(k).add(v.get(finalI)));
+            }
+        }
+        return result;
+
+        /*List<Object> valoresFiltrados = data.get(column).stream().filter(pred).collect(Collectors.<Object>toList());
         List<Object> copiaDF = new ArrayList<>(data.get(column));
         List<Integer> listaPos = new ArrayList<>();
         Map<String,List<Object>> dataframeFiltrado = new HashMap<>();
@@ -92,12 +95,27 @@ public abstract class AbstractDF implements DataFrame {
             }
             dataframeFiltrado.put(categories.get(i),new ArrayList<Object>(copiaDF));        //Añadimos al dataframe la label como key y la lista de valores filtrados.
         }
-        return dataframeFiltrado;
+        return dataframeFiltrado;*/
     }
 
     @Override
-    public Iterator<Object> iterator() {
-        return null;
+    public Iterator<List<Object>> iterator() {
+        int actual=0;
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return actual<size();
+            }
+
+            @Override
+            public List<Object> next() {
+                return data.get(categories.get(actual+1));
+            }
+        };
+    }
+
+    public ArrayList<String> getCategories() {
+        return new ArrayList<>(categories);
     }
 
     @Override
@@ -121,4 +139,5 @@ public abstract class AbstractDF implements DataFrame {
 
         return result;
     }
+
 }

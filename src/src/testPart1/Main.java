@@ -1,10 +1,13 @@
 package testPart1;
 
+import dataFrames.CsvDF;
 import dataFrames.DataFrame;
+import dataFrames.Directory;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 
@@ -32,8 +35,15 @@ public class Main {
             Predicate<Object> pruebaString = (x) -> x.equals("OH");
 
             System.out.println(dataFile.query("LatD",(x) -> (Long)x>48));
+            System.out.println(dataFile.extendedQuery("LatD",(x) -> (Long)x>48));
+
+            Directory directoriProva= new Directory("Arrel");
+            directoriProva.addDataFrame(dataFile);
+            directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
+            System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
+            System.out.println(directoriProva.getCategories());
         } catch (Exception e) {
-            System.out.println("Error en la creación:"+e);
+            e.printStackTrace();
         }
     }
 }
