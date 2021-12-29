@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Carga del fichero <b>.txt</b>
+ */
 public class TxtDFFactory implements DataFrameFactory {
 
     @Override

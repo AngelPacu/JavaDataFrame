@@ -49,12 +49,12 @@ public class Directory implements DataFrame {
 
     @Override
     public List<Object> sort(String column, Comparator<Object> integerComparator) {
-        return children.stream().map(df->df.sort(column,integerComparator)).collect(Collectors.toList());
+        return children.stream().map(df -> df.sort(column, integerComparator)).collect(Collectors.toList());
     }
 
     @Override
     public List<Object> query(String column, Predicate<Object> predicate) {
-        return children.stream().map(df->df.query(column,predicate)).collect(Collectors.toList());
+        return children.stream().map(df -> df.query(column, predicate)).collect(Collectors.toList());
     }
 
     @Override
@@ -64,14 +64,15 @@ public class Directory implements DataFrame {
 
     @Override
     public List<String> getCategories() {
-        ArrayList<String> total =new ArrayList<>();
-        children.stream().map(DataFrame::getCategories).reduce((result,x)->x).ifPresent(total::addAll);
+        ArrayList<String> total = new ArrayList<>();
+        children.stream().map(DataFrame::getCategories).reduce((result, x) -> x).ifPresent(total::addAll);
         return total;
     }
 
     @Override
     public Iterator<List<Object>> iterator() {
-        return children.stream().map(DataFrame::iterator).collect(Collectors.);
+        //return children.stream().map(DataFrame::iterator).collect(Collectors.)
+        return null;
         };
     }
-}
+

@@ -13,6 +13,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Carga del fichero <b>.json</b>.
+ */
 public class JsonDFFactory implements DataFrameFactory {
 
     @Override

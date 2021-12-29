@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 
 import java.util.*;
 
-
+/**
+ * Carga del fichero <b>.csv</b>.
+ */
 public class CsvDFFactory implements DataFrameFactory {
 
     @Override
