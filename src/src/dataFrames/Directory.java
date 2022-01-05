@@ -50,29 +50,48 @@ public class Directory implements DataFrame {
     @Override
     public List<Object> sort(String column, Comparator<Object> integerComparator) {
         return children.stream().map(df -> df.sort(column, integerComparator)).collect(Collectors.toList());
+        //comprovar esto, sino cambiar por el reduce de abajo
     }
 
     @Override
     public List<Object> query(String column, Predicate<Object> predicate) {
-        return children.stream().map(df -> df.query(column, predicate)).collect(Collectors.toList());
+        return children.stream().map(df -> df.query(column, predicate)).reduce(new ArrayList<>(), (x, y)-> {x.addAll(y);return x;});
     }
 
     @Override
-    public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicado) {
-        return null;
+    public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicate) {
+        return children.stream().map(x->x.extendedQuery(column,predicate)).
+                reduce(new HashMap<>(), (x, y)-> {
+                    y.forEach((k,v)->x.merge(k,v, (l1, l2)->{
+                        l1.addAll(l2);
+                        return l1;}));
+                    return x;});
     }
 
     @Override
     public List<String> getCategories() {
-        ArrayList<String> total = new ArrayList<>();
+        /*ArrayList<String> total = new ArrayList<>();
         children.stream().map(DataFrame::getCategories).reduce((result, x) -> x).ifPresent(total::addAll);
-        return total;
+        return total;*/
+
+        return children.stream().map(DataFrame::getCategories).
+                reduce(new ArrayList<>(), (x, y)-> {x.addAll(y);return x;}).
+                stream().distinct().collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, List<Object>> getData() {
+        return children.stream().map(DataFrame::getData).
+                reduce(new HashMap<>(), (x, y)-> {
+                    y.forEach((k,v)->x.merge(k,v, (l1, l2)->{
+                        l1.addAll(l2);
+                        return l1;}));
+                    return x;});
     }
 
     @Override
     public Iterator<List<Object>> iterator() {
-        //return children.stream().map(DataFrame::iterator).collect(Collectors.)
-        return null;
+        return new CsvDF(this.getData(), this.getCategories()).iterator();
         };
     }
 

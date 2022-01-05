@@ -94,8 +94,15 @@ public abstract class AbstractDF implements DataFrame {
         };
     }
 
+    @Override
     public ArrayList<String> getCategories() {
         return new ArrayList<>(categories);
+    }
+
+    @Override
+    public Map<String, List<Object>> getData() {
+        return new HashMap<>(data) {
+        };
     }
 
     @Override

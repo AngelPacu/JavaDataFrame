@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
- * Objeto creado a partir de unos datos recibidos de diferentes formatos de ficheros (.txt,.json,.csv) que permitirá
+ * Objeto creado a partir de unos datos recibidos de diferentes formatos de ficheros (.txt, .json, .csv) que permitirá
  * ejecutar varias operaciones de control sobre estos.
  */
 public interface DataFrame extends Iterable<List<Object>> {
@@ -38,7 +38,7 @@ public interface DataFrame extends Iterable<List<Object>> {
     /**
      * Ordena la lista que tenemos asociado con una key (indicada por parámetro).
      * @param column: La key para obtener la lista a ordenar.
-     * @param comparator: Lamda que indicará como ordenar la lista.
+     * @param comparator: Lambda que indicará como ordenar la lista.
      * @return Lista de los valores ordenados
      */
     List<Object> sort(String column, Comparator<Object> comparator);
@@ -58,8 +58,14 @@ public interface DataFrame extends Iterable<List<Object>> {
     Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicate);
 
     /**
-     * Obtenemos una lista especial de las categorias.
-     * @return Una lista de categorias.
+     * Getter de las categorías
+     * @return Una lista de categorías.
      */
     List<String> getCategories();
+
+    /**
+     * Getter de los datos
+     * @return un mapa con los datos
+     */
+    Map<String, List<Object>> getData();
 }
