@@ -3,12 +3,14 @@ package testPart1;
 import dataFrames.CsvDF;
 import dataFrames.DataFrame;
 import dataFrames.Directory;
+import extern.MapReduce;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 
@@ -42,7 +44,7 @@ public class Main {
     }
 
     @Test
-    public void part2(){
+    public void part2() {
         DataFrame dataFile = readFile();
         System.out.println(dataFile);
         Directory directoriProva= new Directory("Arrel");
@@ -50,5 +52,18 @@ public class Main {
         directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
         System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
         System.out.println(directoriProva.getCategories());
+        System.out.println("Respuesta");
+        System.out.println(directoriProva.iat(127,5));
+        System.out.println(directoriProva.at(127,"State"));
+    }
+
+    @Test
+    public void part4(){
+        DataFrame dataFile = readFile();
+        System.out.println(dataFile);
+        Directory directoriProva= new Directory("Arrel");
+        directoriProva.addDataFrame(dataFile);
+        directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
+        MapReduce.addColumns(Arrays.asList(directoriProva,dataFile,dataFile,dataFile));
     }
 }

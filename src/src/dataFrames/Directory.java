@@ -1,5 +1,6 @@
 package dataFrames;
 
+import java.io.ObjectStreamException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -22,18 +23,20 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public Object at(int row, String column) {
-        int actual = 0;
-        return children.get(actual).size() > row ?
-                children.get(actual++).at(row - children.get(actual).size(), column) :
+    public Object at(int row, String column) { return row>=this.size() ? "Index not valid, element not found" : atAux(row,column,0); }
+
+    private Object atAux(int row, String column, int actual) {
+        return children.get(actual).size() <= row ?
+                atAux(row - children.get(actual).size(), column, actual+1) :
                 children.get(actual).at(row, column);
     }
 
     @Override
-    public Object iat(int row, int column) {
-        int actual = 0;
-        return children.get(actual).size() > row ?
-                children.get(actual++).iat(row - children.get(actual).size(), column) :
+    public Object iat(int row, int column) { return row>=this.size() ? "Index not valid, element not found" : iatAux(row,column,0); }
+
+    private Object iatAux(int row, int column, int actual) {
+        return children.get(actual).size() <= row ?
+                iatAux(row - children.get(actual).size(), column, actual+1) :
                 children.get(actual).iat(row, column);
     }
 

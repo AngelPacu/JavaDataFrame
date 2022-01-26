@@ -59,23 +59,6 @@ public abstract class AbstractDF implements DataFrame {
             }
         }
         return result;
-
-        /*List<Object> valoresFiltrados = data.get(column).stream().filter(pred).collect(Collectors.<Object>toList());
-        List<Object> copiaDF = new ArrayList<>(data.get(column));
-        List<Integer> listaPos = new ArrayList<>();
-        Map<String,List<Object>> dataframeFiltrado = new HashMap<>();
-        for (int i=0; i<valoresFiltrados.size();i++){       //Query gitana
-            listaPos.add(copiaDF.indexOf(valoresFiltrados.get(i)));
-            copiaDF.set(listaPos.get(i),null);
-        }
-        for (int i = 0; i<categories.size();i++){       //Recorremos todas las labels asignandoles los valores obtenido con las indexaciones que hemos obtenido.
-            copiaDF.removeAll(copiaDF);                 //Reutilizamos la lista borrando todos los elementos.
-            for (int j = 0; j<listaPos.size();j++) {
-                copiaDF.add(data.get(categories.get(i)).get(listaPos.get(j))); //Añadimos todos los valores filtrados segun cantidad de posiciones obtenidas
-            }
-            dataframeFiltrado.put(categories.get(i),new ArrayList<Object>(copiaDF));        //Añadimos al dataframe la label como key y la lista de valores filtrados.
-        }
-        return dataframeFiltrado;*/
     }
 
     @Override
