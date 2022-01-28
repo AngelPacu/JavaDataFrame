@@ -1,5 +1,9 @@
 package dataFrames;
 
+import visitor.Visitable;
+import visitor.Visitor;
+import visitor.VisitorMax;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +13,7 @@ import java.util.function.Predicate;
  * Objeto creado a partir de unos datos recibidos de diferentes formatos de ficheros (.txt, .json, .csv) que permitirá
  * ejecutar varias operaciones de control sobre estos.
  */
-public interface DataFrame extends Iterable<List<Object>> {
+public interface DataFrame extends Iterable<List<Object>>, Visitable {
     /**
      * Devuelve el valor de la fila y la columna asignada.
      * @param row: Número de la fila del documento.
@@ -68,4 +72,10 @@ public interface DataFrame extends Iterable<List<Object>> {
      * @return un mapa con los datos
      */
     Map<String, List<Object>> getData();
+
+    default void accept(Visitor visitor, String column){
+        visitor.visit(this,column);
+    };
+
+
 }

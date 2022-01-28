@@ -29,7 +29,8 @@ public class CsvDFFactory implements DataFrameFactory {
             }
         }
         while (sc.hasNext()) {
-            Object[] row= sc.next().replaceAll("[ \"]","").split(",");
+            //Object[] row = sc.next().replaceAll("[ \"]","").split(",");
+            Object[] row = sc.next().replaceAll("[ \"]","").split(",");
             for (int i = 0; i < row.length; i++) {
                 mapList.get(categories.get(i)).add(row[i]);
             }

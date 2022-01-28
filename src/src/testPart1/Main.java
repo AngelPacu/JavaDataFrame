@@ -7,6 +7,7 @@ import extern.MapReduce;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
 import org.junit.jupiter.api.Test;
+import visitor.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.function.Predicate;
 public class Main {
 
     public DataFrame readFile(){
-        File input = new File("dataFiles/cities.json");
+        File input = new File("dataFiles/cities.csv");
         DataFrameFactory factory = AbstractFactory.create(input);
         DataFrame dataFile = null;
         try {
@@ -65,5 +66,15 @@ public class Main {
         directoriProva.addDataFrame(dataFile);
         directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
         MapReduce.addColumns(Arrays.asList(directoriProva,dataFile,dataFile,dataFile));
+    }
+
+    @Test
+    public void part5(){
+        DataFrame dataFile = readFile();
+        Visitor[] visitors = new Visitor[] {new VisitorSum(),new VisitorMax(), new VisitorMin(), new VisitorAverage()};
+        for (Visitor v :visitors)
+            System.out.println(v.visit(dataFile,"LatD"));
+        System.out.println(dataFile);
+
     }
 }
