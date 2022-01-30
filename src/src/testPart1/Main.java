@@ -6,16 +6,16 @@ import dataFrames.Directory;
 import extern.MapReduce;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import visitor.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 
 public class Main {
+
 
     public DataFrame readFile(){
         File input = new File("dataFiles/cities.csv");

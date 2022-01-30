@@ -29,10 +29,15 @@ public class CsvDFFactory implements DataFrameFactory {
             }
         }
         while (sc.hasNext()) {
-            //Object[] row = sc.next().replaceAll("[ \"]","").split(",");
-            Object[] row = sc.next().replaceAll("[ \"]","").split(",");
+            String[] row = sc.next().replaceAll("[ \"]","").split(",");
             for (int i = 0; i < row.length; i++) {
-                mapList.get(categories.get(i)).add(row[i]);
+                if (!row[i].isEmpty()){
+                    try {
+                        mapList.get(categories.get(i)).add(Long.parseLong(row[i]));
+                    } catch(NumberFormatException e){
+                        mapList.get(categories.get(i)).add(row[i]);
+                    }
+                }
             }
         }
         sc.close();

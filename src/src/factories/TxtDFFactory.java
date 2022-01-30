@@ -32,6 +32,6 @@ public class TxtDFFactory implements DataFrameFactory {
             }
         }
         sc.close();
-        return new TxtDF(mapList,categories );
+        return new TxtDF(mapList,categories);
     }
 }
