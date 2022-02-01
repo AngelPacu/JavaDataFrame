@@ -2,7 +2,6 @@ package dataFrames;
 
 import visitor.Visitable;
 import visitor.Visitor;
-import visitor.VisitorMax;
 
 import java.util.Comparator;
 import java.util.List;
