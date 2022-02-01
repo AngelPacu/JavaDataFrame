@@ -1,12 +1,12 @@
 package testPart1;
 
-import dataFrames.CsvDF;
 import dataFrames.DataFrame;
 import dataFrames.Directory;
-import extern.MapReduce;
+import dataFrames.FileDF;
+import observer.MapReduce;
 import factories.AbstractFactory;
 import factories.DataFrameFactory;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import visitor.*;
 
 import java.io.File;
@@ -50,7 +50,8 @@ public class Main {
         System.out.println(dataFile);
         Directory directoriProva= new Directory("Arrel");
         directoriProva.addDataFrame(dataFile);
-        directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
+        directoriProva.addDataFrame(new FileDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
+        System.out.println(directoriProva);
         System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
         System.out.println(directoriProva.getCategories());
         System.out.println("Respuesta");
@@ -64,7 +65,7 @@ public class Main {
         System.out.println(dataFile);
         Directory directoriProva= new Directory("Arrel");
         directoriProva.addDataFrame(dataFile);
-        directoriProva.addDataFrame(new CsvDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
+        directoriProva.addDataFrame(new FileDF(dataFile.extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFile.getCategories()));
         MapReduce.addColumns(Arrays.asList(directoriProva,dataFile,dataFile,dataFile));
     }
 

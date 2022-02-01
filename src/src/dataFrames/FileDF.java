@@ -7,10 +7,14 @@ import java.util.stream.Collectors;
 /**
  * Clase abstracta que servirá para heredar las funciones para las clases hijas.
  */
-public abstract class AbstractDF implements DataFrame {
+public class FileDF implements DataFrame {
     Map<String, List<Object>> data;
-    ArrayList<String> categories;
+    List<String> categories;
 
+    public FileDF(Map<String, List<Object>> data, List<String> categories) {
+        this.data = data;
+        this.categories = categories;
+    }
 
     @Override
     public Object at(int row, String column) {

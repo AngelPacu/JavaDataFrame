@@ -1,4 +1,6 @@
-package extern;
+package observer;
 
 public class LogObserver {
+
+
 }

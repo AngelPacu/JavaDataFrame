@@ -93,8 +93,16 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public Iterator<List<Object>> iterator() {
-        return new CsvDF(this.getData(), this.getCategories()).iterator();
-        };
+    public String toString(){
+        String result = name+":\n";
+        for (DataFrame child:children){
+            result = result.concat("\t-Child "+children.indexOf(child)+":\n"+child.toString()+"\n");
+        }
+        return result;
     }
+
+    @Override
+    public Iterator<List<Object>> iterator() { return new FileDF(this.getData(), this.getCategories()).iterator(); };
+    }
+
 

@@ -1,10 +1,8 @@
-package extern;
+package observer;
 
 import dataFrames.DataFrame;
 
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class MapReduce {
     public static Integer addColumns(Collection<DataFrame> collection) {

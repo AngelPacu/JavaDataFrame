@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import dataFrames.JsonDF;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +18,7 @@ import org.json.simple.parser.ParseException;
 public class JsonDFFactory implements DataFrameFactory {
 
     @Override
-    public DataFrame frame(File input) throws IOException, ParseException {
+    public DataFrame frame(File input, String... delim) throws IOException, ParseException {
 
         HashMap<String, List<Object>> mapList = new HashMap<>();
         ArrayList<String> categories = new ArrayList<>();
@@ -42,7 +41,7 @@ public class JsonDFFactory implements DataFrameFactory {
                 mapList.put(key,listValues);                            //Add to mapList a new Values.
             }
         }
-        return new JsonDF(mapList, categories);
+        return new FileDF(mapList, categories);
     }
 
 

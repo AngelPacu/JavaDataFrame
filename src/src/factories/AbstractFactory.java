@@ -17,7 +17,7 @@ public abstract class AbstractFactory {
         String extension = fileName.substring(fileName.lastIndexOf(".")+1);
         return switch (extension) {
             case ("txt") -> new TxtDFFactory();
-            case ("csv") -> new CsvDFFactory();
+            case ("csv") -> new TxtDFFactory();
             case ("json") -> new JsonDFFactory();
             default -> null;
         };

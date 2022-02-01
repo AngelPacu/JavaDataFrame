@@ -1,4 +1,4 @@
-package extern;
+package observer;
 
 public class QueryObserver {
 }

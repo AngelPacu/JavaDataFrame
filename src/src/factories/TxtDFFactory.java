@@ -1,10 +1,12 @@
 package factories;
 
 import dataFrames.DataFrame;
-import dataFrames.TxtDF;
+import dataFrames.FileDF;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -13,25 +15,32 @@ import java.util.*;
 public class TxtDFFactory implements DataFrameFactory {
 
     @Override
-    public DataFrame frame(File input) throws FileNotFoundException {
-
+    public DataFrame frame(File input, String... delim) throws FileNotFoundException {
         Scanner sc = new Scanner(input);
-        sc.useDelimiter("\\n");
+        sc.useDelimiter(delim.length > 0 ? delim[0] : "\\n");
+
         Map<String, List<Object>> mapList = new HashMap<>();
         ArrayList<String> categories = new ArrayList<>();
 
-        for (String cat : sc.nextLine().replaceAll("[ \"]", "").split(";")) {       //Split sirve para ignorar espacios, este for solo recorre la primera linea.
-            categories.add(cat);
-            mapList.put(cat,new ArrayList<Object>());
+        if (sc.hasNext()) {
+            for (String cat : sc.next().replaceAll("[ \"\\r]", "").split(delim.length > 1 ? delim[1] : ",")) {
+                categories.add(cat);
+                mapList.put(cat, new ArrayList<>());
+            }
         }
-
         while (sc.hasNext()) {
-            String[] row = sc.nextLine().replaceAll("[ \"]","").split(";");
+            String[] row = sc.next().replaceAll("[ \"\\r]", "").split(delim.length > 1 ? delim[1] : ",");
             for (int i = 0; i < row.length; i++) {
-                mapList.get(categories.get(i)).add(row[i]);
+                if (!row[i].isEmpty()) {
+                    try {
+                        mapList.get(categories.get(i)).add(Long.parseLong(row[i]));
+                    } catch (NumberFormatException e) {
+                        mapList.get(categories.get(i)).add(row[i]);
+                    }
+                }
             }
         }
         sc.close();
-        return new TxtDF(mapList,categories);
+        return new FileDF(mapList, categories);
     }
 }

@@ -11,6 +11,7 @@ import java.io.IOException;
  * llamada <b>DataFrame</b>.
  */
 public interface DataFrameFactory {
+
     /**
      * Leeremos los datos del fichero recibido y los cargaremos en la estructura del DataFrame según el tipo de fichero
      * que hemos tratado.
@@ -19,5 +20,7 @@ public interface DataFrameFactory {
      * @throws IOException
      * @throws ParseException
      */
-    DataFrame frame(File input) throws IOException, ParseException;
+    DataFrame frame(File input, String... delim) throws IOException, ParseException;
+
+
 }
