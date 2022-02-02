@@ -62,7 +62,7 @@ public class Directory implements DataFrame {
 
     @Override
     public Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicate) {
-        return children.stream().map(x->x.extendedQuery(column,predicate)).
+        return children.parallelStream().map(x->x.extendedQuery(column,predicate)).
                 reduce(new HashMap<>(), (x, y)-> {
                     y.forEach((k,v)->x.merge(k,v, (l1, l2)->{
                         l1.addAll(l2);
@@ -76,14 +76,14 @@ public class Directory implements DataFrame {
         children.stream().map(DataFrame::getCategories).reduce((result, x) -> x).ifPresent(total::addAll);
         return total;*/
 
-        return children.stream().map(DataFrame::getCategories).
+        return children.parallelStream().map(DataFrame::getCategories).
                 reduce(new ArrayList<>(), (x, y)-> {x.addAll(y);return x;}).
                 stream().distinct().collect(Collectors.toList());
     }
 
     @Override
     public Map<String, List<Object>> getData() {
-        return children.stream().map(DataFrame::getData).
+        return children.parallelStream().map(DataFrame::getData).
                 reduce(new HashMap<>(), (x, y)-> {
                     y.forEach((k,v)->x.merge(k,v, (l1, l2)->{
                         l1.addAll(l2);

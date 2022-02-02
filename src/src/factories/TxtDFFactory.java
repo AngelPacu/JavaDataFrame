@@ -2,11 +2,9 @@ package factories;
 
 import dataFrames.DataFrame;
 import dataFrames.FileDF;
-import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 /**
