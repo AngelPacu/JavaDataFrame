@@ -73,11 +73,13 @@ public class Main {
     public void part4(){
         System.out.println("****** TEST 4 ******\n");
         System.out.println(dataFrames.get(2));
-        Directory directoriProva= new Directory("Arrel");
-        directoriProva.addDataFrame(dataFrames.get(2));
-        directoriProva.addDataFrame(new FileDF(dataFrames.get(2).extendedQuery("OrderID", (x) -> (Long)x>341417157), (ArrayList<String>) dataFrames.get(2).getCategories()));
-        System.out.println(directoriProva+"\n");
-        System.out.println("Total Columns: "+MapReduce.addColumns(Arrays.asList(directoriProva,dataFrames.get(2),dataFrames.get(2),dataFrames.get(2))));
+        Directory testDirectory= new Directory("Arrel");
+        testDirectory.addDataFrame(dataFrames.get(2));
+        testDirectory.addDataFrame(new FileDF(dataFrames.get(2).extendedQuery("OrderID", (x) -> (Long)x>341417157), dataFrames.get(2).getCategories()));
+        System.out.println(testDirectory.sort("OrderID", Comparator.comparingLong(x -> (Long) x)));
+        System.out.println(testDirectory.getCategories());
+        System.out.println(testDirectory+"\n");
+        System.out.println("Total Columns: "+MapReduce.addColumns(Arrays.asList(testDirectory,dataFrames.get(2),dataFrames.get(2),dataFrames.get(2))));
     }
 
     @Test

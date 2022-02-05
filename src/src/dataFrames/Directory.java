@@ -29,6 +29,14 @@ public class Directory implements DataFrame {
                 atAux(row - children.get(actual).size(), column, actual+1) :
                 children.get(actual).at(row, column);
     }
+    private Object aAux(int row, String column, int actual) {
+        return children.get(actual).getCategories().contains(column) ?
+                children.get(actual).size() <= row ?
+                        atAux(row - children.get(actual).size(), column, actual+1) :
+                        children.get(actual).at(row, column) :
+                atAux(row , column, actual+1);
+
+    }
 
     @Override
     public Object iat(int row, int column) { return row>=this.size() ? "Index not valid, element not found" : iatAux(row,column,0); }
@@ -37,6 +45,7 @@ public class Directory implements DataFrame {
         return children.get(actual).size() <= row ?
                 iatAux(row - children.get(actual).size(), column, actual+1) :
                 children.get(actual).iat(row, column);
+        //return new FileDF(this.getData(), this.getCategories()).iat(row,column);
     }
 
     @Override
@@ -50,14 +59,20 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public List<Object> sort(String column, Comparator<Object> integerComparator) {
-        return children.stream().map(df -> df.sort(column, integerComparator)).collect(Collectors.toList());
-        //comprovar esto, sino cambiar por el reduce de abajo
+    public List<Object> sort(String column, Comparator<Object> objectComparator) {
+        return children.stream().map(df -> df.sort(column, objectComparator)).
+                reduce(new ArrayList<>(), (x, y)-> {
+                    x.addAll(y);
+                    x.sort(objectComparator);
+                    return x;});
     }
 
     @Override
     public List<Object> query(String column, Predicate<Object> predicate) {
-        return children.stream().map(df -> df.query(column, predicate)).reduce(new ArrayList<>(), (x, y)-> {x.addAll(y);return x;});
+        return children.stream().map(df -> df.query(column, predicate)).
+                reduce(new ArrayList<>(), (x, y)-> {
+                    x.addAll(y);
+                    return x;});
     }
 
     @Override
