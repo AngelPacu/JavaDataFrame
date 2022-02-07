@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Carga del fichero <b>.txt</b>
+ * <b> Carga generica con delimitadores </b>
  */
 public class TxtDFFactory implements DataFrameFactory {
 

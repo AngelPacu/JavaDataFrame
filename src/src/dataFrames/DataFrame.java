@@ -9,22 +9,22 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
- * Objeto creado a partir de unos datos recibidos de diferentes formatos de ficheros (.txt, .json, .csv) que permitirá
- * ejecutar varias operaciones de control sobre estos.
+ * Object created from data received from different file formats (.txt, .json, .csv) that will allow to
+ * execute several control operations on these files.
  */
 public interface DataFrame extends Iterable<List<Object>>, Visitable {
     /**
-     * Devuelve el valor de la fila y la columna asignada.
-     * @param row: Número de la fila del documento.
-     * @param column: Etiqueta de la categoría.
-     * @return El valor que corresponde a la posición.
+     * Returns the value of the row and the assigned column.
+     * @param row: Number of the document row.
+     * @param column: Category label.
+     * @return The value that corresponds to the position.
      */
     Object at(int row, String column);
     /**
-     * Devuelve el valor de la fila y la columna asignada.
-     * @param row: Número de la fila del documento.
-     * @param column: Número de la categoría.
-     * @return El valor que corresponde a la posición.
+     * Returns the value of the row and the assigned column.
+     * @param row: Number of the document row.
+     * @param column: Number of the category.
+     * @return The value that corresponds to the position.
      */
     Object iat(int row, int column);
     /**
@@ -33,47 +33,54 @@ public interface DataFrame extends Iterable<List<Object>>, Visitable {
      */
     int columns();
     /**
-     * Indica la cantidad total de elementos de la "list" que tiene el hashmap como valor.
-     * @return Devuelve un int indicando la cantidad total de filas.
+     * Indicates the total number of columns.
+     * @return an int indicating the total number of columns.
      */
     int size();
 
     /**
-     * Ordena la lista que tenemos asociado con una key (indicada por parámetro).
-     * @param column: La key para obtener la lista a ordenar.
-     * @param comparator: Lambda que indicará como ordenar la lista.
-     * @return Lista de los valores ordenados
+     * Sorts the list we have associated with a key (specified by parameter).
+     * @param column: The key to get the list to sort.
+     * @param comparator: Lambda that will indicate how to sort the list.
+     * @return List of the sorted values.
      */
     List<Object> sort(String column, Comparator<Object> comparator);
     /**
-     * Muestra los elementos que cumplan la condición indicada por el usuario.
-     * @param column: La key para obtener la lista a filtrar.
-     * @param predicate: El predicado que filtrará los resultados.
-     * @return Lista de las columnas que cumplan la condición.
+     * Displays the elements that meet the condition indicated by the user.
+     * @param column: The key to obtain the list to filter.
+     * @param predicate: The predicate that will filter the results.
+     * @return List of the columns that meet the condition.
      */
     List<Object> query(String column, Predicate<Object> predicate);
     /**
-     * Una mejora de la función "query" que mostrará toda la fila de la posición que cumpla la condición.
-     * @param column: La key para obtener la lista a filtrar.
-     * @param predicate: El predicado que filtrará los resultados.
-     * @return Una lista Hash con todos los datos asociados a la columna que cumpla la condición.
+     * An enhancement to the "query" function that will display the entire row of the position that meets the condition.
+     * @param column: The key to get the list to filter.
+     * @param predicate: The predicate that will filter the results.
+     * @return A Hash list with all the data associated to the column that meets the condition.
      */
     Map<String, List<Object>> extendedQuery(String column, Predicate<Object> predicate);
 
     /**
-     * Getter de las categorías
-     * @return Una lista de categorías.
+     * Getter of categories
+     * @return A list of categories.
      */
     List<String> getCategories();
 
     /**
-     * Getter de los datos
-     * @return un mapa con los datos
+     * Getter of the data
+     * @return a map with the data
      */
     Map<String, List<Object>> getData();
 
-    default void accept(Visitor visitor, String column){
-        visitor.visit(this,column);
+
+    /**
+     * Implemented function that accepts the visitor indicating the column to be operated.
+     * @param visitor: person who wants to perform an operation.
+     * @param column: the column we want to operate on.
+     * @return The result of the visitor's operation.
+     */
+    default long accept(Visitor visitor, String column){
+        return visitor.visit(this,column);
     };
 
 

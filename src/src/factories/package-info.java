@@ -1,5 +1,5 @@
 /**
- * Las factories se encargarán de leer los diferentes formatos de ficheros y cargar los datos leídos un DataFrame.
+ * The factories will read the different file formats and load the read data into a DataFrame.
  */
 package factories;
 //-encoding UTF-8 -charset UTF-8 -docencoding UTF-8 PARA GENERAR ACENTOS

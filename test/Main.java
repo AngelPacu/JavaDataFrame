@@ -12,9 +12,7 @@ import org.junit.Test;
 import visitor.*;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 
 public class Main {
@@ -46,7 +44,6 @@ public class Main {
         System.out.println("Size: "+dataFrames.get(0).size());
         System.out.println("Columns: "+dataFrames.get(0).columns());
         System.out.println(dataFrames.get(0).at(23,"F"));
-        System.out.println(dataFrames.get(0).at(23,"LatD"));
         System.out.println(dataFrames.get(0).iat(23,5));
         System.out.println(dataFrames.get(0).sort("LatD", (x, y) -> Long.compare((Long) x, (Long) y)));
         System.out.println(dataFrames.get(0).sort("State", (x, y) -> ((String) x).compareTo((String)y)));
@@ -62,11 +59,12 @@ public class Main {
         directoriProva.addDataFrame(dataFrames.get(1));
         directoriProva.addDataFrame(new FileDF(dataFrames.get(1).extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFrames.get(1).getCategories()));
         System.out.println(directoriProva);
-        System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
+        //Map<String, List<Object>> prueba = directoriProva.getData();
+        //System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
         System.out.println(directoriProva.getCategories());
         System.out.println("Respuesta");
         System.out.println(directoriProva.iat(127,5));
-        System.out.println(directoriProva.at(127,"State"));
+        System.out.println(directoriProva.at(128,"State"));
     }
 
     @Test
@@ -87,7 +85,7 @@ public class Main {
         System.out.println("****** TEST 5 ******\n");
         Visitor[] visitors = new Visitor[] {new VisitorSum(),new VisitorMax(), new VisitorMin(), new VisitorAverage()};
         for (Visitor v :visitors)
-            System.out.println(v.visit(dataFrames.get(1),"LatD"));
+            System.out.println(dataFrames.get(1).accept(v,"LatD"));
         System.out.println(dataFrames.get(1));
     }
 
@@ -108,6 +106,7 @@ public class Main {
         observer.subscribe("query", clients[0]);
         observer.subscribe("query", clients[3]);
         observer.subscribe("query", clients[4]);
+        observer.notifySubscribers("any");
         System.out.println(proxy.size() + "\n");
         System.out.println(proxy.query("City", (x) -> {
             return ((String)x).contains("a");

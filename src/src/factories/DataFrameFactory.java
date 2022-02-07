@@ -7,16 +7,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Cargaremos los datos leídos de las diferentes factories y los cargaremos una estructura de datos
- * llamada <b>DataFrame</b>.
+ * We will load the data read from the different factories and load it into a data structure <b>DataFrame</b>.
  */
 public interface DataFrameFactory {
 
     /**
-     * Leeremos los datos del fichero recibido y los cargaremos en la estructura del DataFrame según el tipo de fichero
-     * que hemos tratado.
-     * @param input: Fichero a leer.
-     * @return Devuelve una estructura DataFrame {HashMap,ArrayList}
+     * We will read the data from the received file and load it into the DataFrame structure according to the file type.
+     * we have treated.
+     * @param input: File to read.
+     * @return Returns a DataFrame {HashMap,ArrayList} structure.
      * @throws IOException
      * @throws ParseException
      */

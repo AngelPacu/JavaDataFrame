@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- * Carga del fichero <b>.json</b>.
+ * Loading of the <b>.json</b> file.
  */
 public class JsonDFFactory implements DataFrameFactory {
 

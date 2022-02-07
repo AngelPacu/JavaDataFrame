@@ -1,23 +1,31 @@
 package observer;
 
 import dataFrames.DataFrame;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+/**
+ * It is our dynamic proxy that will implement the DF functions and for each function executed,
+ * it will pass through the obersevator class and execute the function indicated by parameter.
+ */
 public class Interceptor implements DataFrame{
     DataFrame df;
     Observer editor;
 
-
+    /**
+     * Proxy Constructor.
+     * @param df: Dataframe
+     * @param observer: It will have 2 events and a list of clients.
+     */
     public Interceptor(DataFrame df, Observer observer) {
         this.df = df;
         editor=observer;
     }
-
+    // All functions will invoke the DATA FRAME function
+    // And the only difference is that the editor will notify the clients that are assigned to the event.
 
     @Override
     public Object at(int row, String column) {

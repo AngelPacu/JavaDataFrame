@@ -3,14 +3,14 @@ package factories;
 import java.io.File;
 
 /**
- * Nos indicará el formato del fichero tratar.
+ * It will indicate the format of the file to be processed.
  */
 public abstract class AbstractFactory {
 
     /**
-     * Creará el DataFrame correspondiente, según el formato del fichero que hemos leído.
-     * @param input: Nombre del fichero con el que obtendremos la extensión.
-     * @return Devuelve la invocación de la creación de un DataFrame.
+     * It will create the corresponding DataFrame, according to the format of the file we have read.
+     * @param input: Name of the file with which we will obtain the extension.
+     * @return Returns the invocation of the creation of a DataFrame.
      */
     public static DataFrameFactory create(File input) {
         String fileName = input.getName();
