@@ -23,13 +23,8 @@ public class Directory implements DataFrame {
 
     @Override
     public Object at(int row, String column) { return row>=this.size() ? "Index not valid, element not found" : atAux(row,column,0); }
-
+    
     private Object atAux(int row, String column, int actual) {
-        return children.get(actual).size() <= row ?
-                atAux(row - children.get(actual).size(), column, actual+1) :
-                children.get(actual).at(row, column);
-    }
-    private Object aAux(int row, String column, int actual) {
         return children.get(actual).getCategories().contains(column) ?
                 children.get(actual).size() <= row ?
                         atAux(row - children.get(actual).size(), column, actual+1) :
@@ -39,14 +34,17 @@ public class Directory implements DataFrame {
     }
 
     @Override
-    public Object iat(int row, int column) { return row>=this.size() ? "Index not valid, element not found" : iatAux(row,column,0); }
+    public Object iat(int row, int column) {
+        return row>=this.size() && column>=this.getCategories().size() ?
+                "Index not valid, element not found" :
+                at(row,this.getCategories().get(column));
+    }
 
-    private Object iatAux(int row, int column, int actual) {
+    /*private Object iatAux(int row, int column, int actual) {
         return children.get(actual).size() <= row ?
                 iatAux(row - children.get(actual).size(), column, actual+1) :
                 children.get(actual).iat(row, column);
-        //return new FileDF(this.getData(), this.getCategories()).iat(row,column);
-    }
+    }*/
 
     @Override
     public int columns() {
