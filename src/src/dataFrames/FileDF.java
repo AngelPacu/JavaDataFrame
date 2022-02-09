@@ -5,7 +5,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Clase abstracta que servirá para heredar las funciones para las clases hijas.
+ * Object created from data received from different file formats (.txt, .json, .csv) that implements
+ * methods from the parent class DataFrame, also the leaf object in the Composite structure.
  */
 public class FileDF implements DataFrame {
     Map<String, List<Object>> data; // HashMap (Keys = LabelsColumns, ListObject = ListValues)
@@ -67,16 +68,17 @@ public class FileDF implements DataFrame {
 
     @Override
     public Iterator<List<Object>> iterator() {
-        int pos=0;
+
         return new Iterator<>() {       // To loop through the list of values, we shall not exceed the size of the list.
+            private int pos=0;
             @Override
             public boolean hasNext() {
-                return pos<size();
-            }   // We control not to exceed the size, return TRUE/FALSE
+                return pos<size()-1;
+            }   //
 
             @Override
             public List<Object> next() {
-                return data.get(categories.get(pos+1));
+                return data.get(categories.get(pos++));
             }   // Return to values list.
         };
     }
@@ -96,7 +98,8 @@ public class FileDF implements DataFrame {
             result = result.concat(cat+":\t\t\t"+data.get(cat).toString()+"\n");
         }
         return result;
-        /*for(String cat:categories){
+
+        /*for(String cat:categories){   //Alternative print in columns
             result = result.concat(cat+":\t\t\t");
         }
         result = result.concat("\n");

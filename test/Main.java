@@ -5,7 +5,7 @@ import factories.AbstractFactory;
 import factories.DataFrameFactory;
 import observer.Client;
 import observer.Interceptor;
-import observer.MapReduce;
+import dataFrames.MapReduce;
 import observer.Observer;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,17 +55,32 @@ public class Main {
     public void part2() {
         System.out.println("****** TEST 2 ******\n");
         System.out.println(dataFrames.get(1));
-        Directory directoriProva= new Directory("Arrel");
-        directoriProva.addDataFrame(dataFrames.get(1));
-        directoriProva.addDataFrame(new FileDF(dataFrames.get(1).extendedQuery("LatD", (x) -> (Long)x>48), (ArrayList<String>) dataFrames.get(1).getCategories()));
-        System.out.println(directoriProva);
-        //Map<String, List<Object>> prueba = directoriProva.getData();
-        //System.out.println(directoriProva.extendedQuery("LatD",(x) -> (Long)x>48));
-        System.out.println(directoriProva.getCategories());
+        Directory testDirectory= new Directory("Arrel");
+        testDirectory.addDataFrame(dataFrames.get(1));
+        testDirectory.addDataFrame(new FileDF(dataFrames.get(1).extendedQuery("LatD", (x) -> (Long)x>48), dataFrames.get(1).getCategories()));
+        System.out.println(testDirectory);
+        //Map<String, List<Object>> prueba = testDirectory.getData();
+        //System.out.println(testDirectory.extendedQuery("LatD",(x) -> (Long)x>48));
+        System.out.println(testDirectory.getCategories());
         System.out.println("Respuesta");
-        System.out.println(directoriProva.iat(127,5));
-        System.out.println(directoriProva.at(128,"State"));
+        System.out.println(testDirectory.iat(127,5));
+        System.out.println(testDirectory.at(128,"State"));
+        testDirectory.removeDataFrame(dataFrames.get(1));
     }
+
+    @Test
+    public void part3() {
+        System.out.println("****** TEST 3 ******\n");
+        Directory testDirectory= new Directory("Arrel");
+        testDirectory.addDataFrame(dataFrames.get(1));
+        testDirectory.addDataFrame(new FileDF(dataFrames.get(1).extendedQuery("LatD", (x) -> (Long)x>48), dataFrames.get(1).getCategories()));
+        System.out.println(testDirectory);
+
+        System.out.println("Parallel At: "+MapReduce.parallelAt(testDirectory.getChildren(), 1, "LatD"));
+        System.out.println("Column sum: "+MapReduce.addColumns(testDirectory.getChildren()));
+        System.out.println("Filter + Sort: "+MapReduce.filterSort(testDirectory.getChildren(), "LatS", (x, y) -> Long.compare((Long) x, (Long) y), (x) -> (Long)x>30));
+    }
+
 
     @Test
     public void part4(){
@@ -74,6 +89,8 @@ public class Main {
         Directory testDirectory= new Directory("Arrel");
         testDirectory.addDataFrame(dataFrames.get(2));
         testDirectory.addDataFrame(new FileDF(dataFrames.get(2).extendedQuery("OrderID", (x) -> (Long)x>341417157), dataFrames.get(2).getCategories()));
+
+        System.out.println(testDirectory.getData());
         System.out.println(testDirectory.sort("OrderID", Comparator.comparingLong(x -> (Long) x)));
         System.out.println(testDirectory.getCategories());
         System.out.println(testDirectory+"\n");
@@ -99,7 +116,7 @@ public class Main {
         }
 
         Observer observer = new Observer();
-        Interceptor proxy = new Interceptor((DataFrame)this.dataFrames.get(0), observer);
+        Interceptor proxy = new Interceptor(this.dataFrames.get(0), observer);
         observer.subscribe("any", clients[0]);
         observer.subscribe("any", clients[1]);
         observer.subscribe("any", clients[2]);
@@ -118,16 +135,15 @@ public class Main {
     @Test
     public void part7() {
         System.out.println("****** TEST 7 ******\n");
-        System.out.println(this.dataFrames.get(2));
-        System.out.println("Size: " + this.dataFrames.get(2).size());
-        System.out.println("Columns: " + this.dataFrames.get(2).columns());
-        System.out.println(this.dataFrames.get(2).at(23, "Region"));
-        System.out.println(this.dataFrames.get(2).at(23, "ItemType"));
-        System.out.println(this.dataFrames.get(2).iat(23, 5));
-        System.out.println(this.dataFrames.get(2).sort("OrderID", Comparator.comparingLong(x -> (Long) x)));
-        System.out.println(this.dataFrames.get(2).sort("Region", Comparator.comparing(x -> ((String) x))));
-        System.out.println(this.dataFrames.get(2).sort("UnitPrice", Comparator.comparingDouble(x -> (Double) x)));
-        System.out.println(this.dataFrames.get(2).query("SalesChannel", (x) -> x.equals("Online")));
-        System.out.println((this.dataFrames.get(2)).extendedQuery("OrderDate", (x) -> ((String)x).contains("/2015")));
+        System.out.println(dataFrames.get(2));
+        System.out.println("Size: " + dataFrames.get(2).size());
+        System.out.println("Columns: " + dataFrames.get(2).columns());
+        System.out.println(dataFrames.get(2).at(23, "Region"));
+        System.out.println(dataFrames.get(2).at(23, "ItemType"));
+        System.out.println(dataFrames.get(2).iat(23, 5));
+        System.out.println(dataFrames.get(2).sort("OrderID", Comparator.comparingLong(x -> (Long) x)));
+        System.out.println(dataFrames.get(2).sort("Region", Comparator.comparing(x -> ((String) x))));
+        System.out.println(dataFrames.get(2).query("SalesChannel", (x) -> x.equals("Online")));
+        System.out.println((dataFrames.get(2)).extendedQuery("OrderDate", (x) -> ((String)x).contains("/2015")));
     }
 }
