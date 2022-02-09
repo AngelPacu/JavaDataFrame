@@ -16,8 +16,8 @@ public interface DataFrameFactory {
      * we have treated.
      * @param input: File to read.
      * @return Returns a DataFrame {HashMap,ArrayList} structure.
-     * @throws IOException
-     * @throws ParseException
+     * @throws IOException: error with the file
+     * @throws ParseException: error parsing the elements
      */
     DataFrame frame(File input, String... delim) throws IOException, ParseException;
 

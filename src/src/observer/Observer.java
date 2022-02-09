@@ -26,7 +26,7 @@ public class Observer{
 
     /**
      * Function to remove a client to the list and assign it to an event.
-     * @param event
+     * @param event: action that wants to subscribe to
      * @param subscriber: Client
      */
     public void unsubscribe(String event, Client subscriber) {
@@ -36,7 +36,7 @@ public class Observer{
     /**
      * Execute the function of "receiveNotification" of all clients assigned to an event,
      * If it does not find the event, it will display a not found message.
-     * @param event
+     * @param event: action that wants to subscribe to
      */
     public void notifySubscribers(String event) {
         if (clients.containsKey(event)){

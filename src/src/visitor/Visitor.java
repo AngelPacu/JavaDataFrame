@@ -10,7 +10,7 @@ public interface Visitor {
      *
      * @param dataFrame: DF we use
      * @param column: The column we want to operate on.
-     * @return
+     * @return the result of the operation performed
      */
-    public long visit(DataFrame dataFrame, String column);
+    long visit(DataFrame dataFrame, String column);
 }

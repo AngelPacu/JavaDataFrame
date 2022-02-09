@@ -1,16 +1,18 @@
 package factories;
 
-import dataFrames.*;
+import dataFrames.DataFrame;
+import dataFrames.FileDF;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Loading of the <b>.json</b> file.
@@ -26,19 +28,16 @@ public class JsonDFFactory implements DataFrameFactory {
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = (JSONArray) jsonParser.parse(reader);     //We need to cast it in an array to iterate it.
 
-        for (int i = 0; i<jsonArray.size(); i++){
-            JSONObject objectFile = (JSONObject) jsonArray.get(i);          //A JSONObject is a list
-            Iterator<String> keys = objectFile.keySet().iterator();         //To iterate the keys.
-            Iterator<Object> values = objectFile.values().iterator();       //To iterate the values.
-            String key;
+        JSONObject first = (JSONObject) jsonArray.get(0);
+        for (Object key: first.keySet()) {
+            mapList.put((String) key, new ArrayList<>());               //Creates an empty ArrayList for each category
+            categories.add((String) key);
+        }
 
-            while (values.hasNext()){
-                List<Object> listValues = new ArrayList<>();
-                key = keys.next();
-                if(i==0) categories.add(key);                           //Only add all keys 1 time in the arrayList.
-                if(mapList.containsKey(key)) listValues = (mapList.get(key));   //Si tenemos la key en la mapList, añadiremos en la lista el valor del objeto con esa clave.
-                listValues.add(values.next());
-                mapList.put(key,listValues);                            //Add to mapList a new Values.
+        for (Object o : jsonArray) {
+            JSONObject row = (JSONObject) o;          //A JSONObject is a list
+            for (int j = 0; j < row.size(); j++) {
+                mapList.get(categories.get(j)).add(row.get(categories.get(j)));
             }
         }
         return new FileDF(mapList, categories);

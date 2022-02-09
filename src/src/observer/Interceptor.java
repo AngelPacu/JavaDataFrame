@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 /**
  * It is our dynamic proxy that will implement the DF functions and for each function executed,
- * it will pass through the obersevator class and execute the function indicated by parameter.
+ * it will pass through the observer class and execute the function indicated by parameter.
  */
 public class Interceptor implements DataFrame{
     DataFrame df;

@@ -1,7 +1,7 @@
 package observer;
 
 /**
- * A object that will only have a string and will be able to execute a function that will notify the executed event.
+ * An object that will only have a string and will be able to execute a function that will notify the executed event.
  */
 public class Client {
     String name;
