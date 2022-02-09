@@ -75,7 +75,6 @@ public class Main {
         testDirectory.addDataFrame(dataFrames.get(1));
         testDirectory.addDataFrame(new FileDF(dataFrames.get(1).extendedQuery("LatD", (x) -> (Long)x>48), dataFrames.get(1).getCategories()));
         System.out.println(testDirectory);
-
         System.out.println("Parallel At: "+MapReduce.parallelAt(testDirectory.getChildren(), 1, "LatD"));
         System.out.println("Column sum: "+MapReduce.addColumns(testDirectory.getChildren()));
         System.out.println("Filter + Sort: "+MapReduce.filterSort(testDirectory.getChildren(), "LatS", (x, y) -> Long.compare((Long) x, (Long) y), (x) -> (Long)x>30));
